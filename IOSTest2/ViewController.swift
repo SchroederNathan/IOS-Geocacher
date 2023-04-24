@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import MapKit
 
-class ViewController: UIViewController {
+import CoreLocation
 
+class ViewController: UITableViewController, CLLocationManagerDelegate {
+
+    var locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        locationManager.delegate = self
+        
+        // Request location
+        if locationManager.authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+    }
+
     }
 
 
-}
+
 
