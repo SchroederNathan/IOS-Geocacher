@@ -25,6 +25,12 @@ class ViewController: UITableViewController, CLLocationManagerDelegate {
         }
         
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? MapDetailsViewController else { return }
+        
+        destination.locationManager = locationManager
+    }
 
     }
 
