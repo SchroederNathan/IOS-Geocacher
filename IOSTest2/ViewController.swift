@@ -31,6 +31,17 @@ class ViewController: UITableViewController, CLLocationManagerDelegate {
         
         destination.locationManager = locationManager
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath)
+        cell.textLabel?.text = "Location Name"
+        cell.detailTextLabel?.text = "Description"
+        return cell
+    }
 
     }
 

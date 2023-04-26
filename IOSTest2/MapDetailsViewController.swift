@@ -17,6 +17,10 @@ class MapDetailsViewController: UIViewController {
     
     //MARK: - Actions
     @IBAction func addLocation(_ sender: UIButton) {
+        let controller = storyboard?.instantiateViewController(identifier: "LocationsVC") as! ViewController
+        
+        
+        
     }
     
     //MARK: - Properties
