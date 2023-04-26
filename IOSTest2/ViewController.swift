@@ -7,12 +7,39 @@
 
 import UIKit
 import MapKit
+import CoreSpotlight
+import MobileCoreServices
 
 import CoreLocation
 
-class ViewController: UITableViewController, CLLocationManagerDelegate {
-
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    
+    // MARK: - Outlets
+    @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Diffable Data Source
+    private lazy var tableDataSource = UITableViewDiffableDataSource<Section, Location>(tableView: tableView){
+        tableView, IndexPath, location in
+        // Create cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: IndexPath)
+        
+        // Change labels
+        cell.textLabel?.text = location.locationName
+        
+        // Format date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YY/MM/dd"
+        
+        cell.detailTextLabel?.text = dateFormatter.string(from: location.date)
+        
+        return cell
+    }
+    
+    // MARK: - Properties
+    
     var locationManager = CLLocationManager()
+    var locations = [Location]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +51,46 @@ class ViewController: UITableViewController, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         }
         
+        let defaults = UserDefaults.standard
+        if let savedLocations = defaults.object(forKey: "locations") as? [Location] {
+            locations = savedLocations
+        }
+        
+        tableView.isEditing = true
+        tableView.allowsSelectionDuringEditing = true
+        
+        
+        
+        loadSnapshot()
+    }
+    
+    func index(item: Int) {
+        let location = locations[item]
+
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+        attributeSet.title = location.locationName
+        attributeSet.contentDescription = location.description
+        attributeSet.addedDate = location.date
+
+        let item = CSSearchableItem(uniqueIdentifier: "\(item)", domainIdentifier: "dev.nathanschroeder", attributeSet: attributeSet)
+        item.expirationDate = Date.distantFuture
+        
+        CSSearchableIndex.default().indexSearchableItems([item]) { error in
+            if let error = error {
+                print("Indexing error: \(error.localizedDescription)")
+            } else {
+                print("Search item successfully indexed!")
+            }
+        }
+        
+        
+    }
+    
+    func loadSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Location>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(locations, toSection: .main)
+        tableDataSource.apply(snapshot)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -32,19 +99,11 @@ class ViewController: UITableViewController, CLLocationManagerDelegate {
         destination.locationManager = locationManager
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath)
-        cell.textLabel?.text = "Location Name"
-        cell.detailTextLabel?.text = "Description"
-        return cell
-    }
-
-    }
-
-
+    
+    
+    
+    
+}
 
 

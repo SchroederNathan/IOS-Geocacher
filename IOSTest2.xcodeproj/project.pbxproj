@@ -14,6 +14,7 @@
 		4332D7A629F0653D0053B5C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4332D7A429F0653D0053B5C9 /* Main.storyboard */; };
 		4332D7A829F0653E0053B5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4332D7A729F0653E0053B5C9 /* Assets.xcassets */; };
 		4332D7AB29F0653E0053B5C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4332D7A929F0653E0053B5C9 /* LaunchScreen.storyboard */; };
+		4348919E29F90E9300DA86F5 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348919D29F90E9300DA86F5 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4332D7A729F0653E0053B5C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4332D7AA29F0653E0053B5C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4332D7AC29F0653E0053B5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4348919D29F90E9300DA86F5 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				4332D7A229F0653D0053B5C9 /* ViewController.swift */,
 				430ACEDA29F7662C0034963F /* MapDetailsViewController.swift */,
 				4332D7A429F0653D0053B5C9 /* Main.storyboard */,
+				4348919D29F90E9300DA86F5 /* Location.swift */,
 				4332D7A729F0653E0053B5C9 /* Assets.xcassets */,
 				4332D7A929F0653E0053B5C9 /* LaunchScreen.storyboard */,
 				4332D7AC29F0653E0053B5C9 /* Info.plist */,
@@ -143,6 +146,7 @@
 			files = (
 				430ACEDB29F7662C0034963F /* MapDetailsViewController.swift in Sources */,
 				4332D7A329F0653D0053B5C9 /* ViewController.swift in Sources */,
+				4348919E29F90E9300DA86F5 /* Location.swift in Sources */,
 				4332D79F29F0653D0053B5C9 /* AppDelegate.swift in Sources */,
 				4332D7A129F0653D0053B5C9 /* SceneDelegate.swift in Sources */,
 			);
