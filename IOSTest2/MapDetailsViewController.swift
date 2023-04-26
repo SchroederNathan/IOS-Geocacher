@@ -15,17 +15,18 @@ class MapDetailsViewController: UIViewController {
     @IBOutlet var locationNameTextField: UITextField!
     @IBOutlet var locationDescriptionTextView: UITextView!
     
-    weak var delegate: ViewController!
-    
     //MARK: - Actions
 
     
     //MARK: - Properties
     var locationManager: CLLocationManager!
+    var savedLocations = [Location]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.mapType = .satellite
+        mapView.isScrollEnabled = false
+        mapView.showsUserLocation = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -36,35 +37,36 @@ class MapDetailsViewController: UIViewController {
         view.endEditing(true)
     }
     
-    func textFieldShouldReturn(_ locationNameTextField: UITextField) -> Bool {
-        locationNameTextField.resignFirstResponder()
-        return true
-    }
+
     
     @IBAction func addLocation(_ sender: Any) {
-        let date = Date()
+        //let date = Date()
     }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? ViewController else { return }
-        destination.locations.append(Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: Date()))
         
+        // Format date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YY/MM/dd"
+        
+        let date = dateFormatter.string(from: Date())
+        
+        let location = Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: date)
+        
+        destination.locations.append(location)
+    }
+}
 
+extension MapDetailsViewController: UITextViewDelegate{
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            locationDescriptionTextView.resignFirstResponder()
+            view.endEditing(true)
+            return false
+        }
+        return true
     }
-        
-        
-        
-        
-        
-        
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
-        
-    }
+}

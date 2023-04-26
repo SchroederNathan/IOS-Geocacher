@@ -25,15 +25,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // Change labels
         cell.textLabel?.text = location.locationName
+        cell.detailTextLabel?.text = location.date
         
-        // Format date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YY/MM/dd"
-        
-        cell.detailTextLabel?.text = dateFormatter.string(from: location.date)
+        self.index(item: IndexPath.row)
         
         return cell
     }
+    
+    
+    
     
     // MARK: - Properties
     
@@ -46,18 +46,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         locationManager.delegate = self
         
+
+        
         // Request location
         if locationManager.authorizationStatus == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         
-        let defaults = UserDefaults.standard
-        if let savedLocations = defaults.object(forKey: "locations") as? [Location] {
-            locations = savedLocations
-        }
-        
-        tableView.isEditing = true
-        tableView.allowsSelectionDuringEditing = true
+//        let defaults = UserDefaults.standard
+//        if let savedLocations = defaults.object(forKey: "locations") as? [Location] {
+//            locations = savedLocations
+//        }
         
         
         
@@ -67,12 +66,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func index(item: Int) {
         let location = locations[item]
 
-        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+        let attributeSet = CSSearchableItemAttributeSet(contentType: .text)
         attributeSet.title = location.locationName
         attributeSet.contentDescription = location.description
-        attributeSet.addedDate = location.date
+        attributeSet.thumbnailData = UIImage(systemName: "backpack.fill")?.withTintColor(.white).pngData()
+        
+        print("\(location.locationName ?? "none")")
 
         let item = CSSearchableItem(uniqueIdentifier: "\(item)", domainIdentifier: "dev.nathanschroeder", attributeSet: attributeSet)
+        
         item.expirationDate = Date.distantFuture
         
         CSSearchableIndex.default().indexSearchableItems([item]) { error in
@@ -83,7 +85,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
         
-        
+    }
+    
+    func deindex(item: Int) {
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(item)"]) { error in
+            if let error = error {
+                print("Deindexing error: \(error.localizedDescription)")
+            } else {
+                print("Search item successfully removed!")
+            }
+        }
     }
     
     func loadSnapshot() {
@@ -93,9 +104,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         tableDataSource.apply(snapshot)
     }
     
+    func showAlert(_ which: Int) {
+        let alert = UIAlertController(title: "Do you remember?", message: "\(locations[which].locationName ?? "Title") \n \(locations[which].description ?? "Description")", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? MapDetailsViewController else { return }
         
+        destination.savedLocations = locations
         destination.locationManager = locationManager
     }
     

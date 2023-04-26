@@ -12,10 +12,10 @@ enum Section {
     case main
 }
 
-struct Location: Hashable {
-    var locationName: String
-    var description: String
-    var date: Date
+struct Location: Codable, Hashable {
+    var locationName: String?
+    var description: String?
+    var date: String?
     
     enum CodingKeys: String, CodingKey {
         case locationName

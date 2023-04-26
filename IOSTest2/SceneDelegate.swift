@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import CoreSpotlight
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-//    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-//        if userActivity.activityType ==
-//    }
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if userActivity.activityType == CSSearchableItemActionType {
+            if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                if let navController = window?.rootViewController as? UINavigationController {
+                    if let viewController = navController.topViewController as? ViewController {
+                        viewController.showAlert(Int(uniqueIdentifier)!)
+                    }
+                }
+            }
+        }
+    }
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
