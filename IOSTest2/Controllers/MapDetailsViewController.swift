@@ -16,40 +16,6 @@ class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var locationDescriptionTextView: UITextView!
     
     //MARK: - Actions
-
-    
-    //MARK: - Properties
-    var locationManager: CLLocationManager!
-    var savedLocations = [Location]()
-    var locationStore: LocationStore!
-    //var currentLocation:
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapView.mapType = .satellite
-        mapView.isScrollEnabled = false
-        mapView.showsUserLocation = true
-        
-        locationManager.delegate = self
-        
-        
-        
-        
-        
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-        
-    }
-    
-
-        
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-
-    
     @IBAction func addLocation(_ sender: Any) {
         let confirmationView = ConfirmationDialog()
         confirmationView.frame = view.bounds
@@ -74,24 +40,39 @@ class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
             self.navigationController?.popViewController(animated: true)
         })
     }
+
     
+    //MARK: - Properties
+    var locationManager: CLLocationManager!
+    var savedLocations = [Location]()
+    var locationStore: LocationStore!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Change map to a satellite view
+        mapView.mapType = .satellite
+        
+        // Disable scrolling inside the map
+        mapView.isScrollEnabled = false
+        
+        // Shows the users current location on the map.
+        mapView.showsUserLocation = true
+        
+        locationManager.delegate = self
+        
+        // Dismiss the keyboard when tapping somewhere other than the keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
+    }
     
-    // MARK: - Navigation
+    // MARK: - Keyboard
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let destination = segue.destination as? ViewController else { return }
-//
-//        // Format date
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "YY/MM/dd"
-//
-//        let date = dateFormatter.string(from: Date())
-//
-//        let location = Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: date)
-//
-//        destination.locations.append(location)
-//    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
 }
 
 extension MapDetailsViewController: UITextViewDelegate{

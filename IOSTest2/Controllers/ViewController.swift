@@ -37,7 +37,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - Properties
-    
     var locationStore: LocationStore!
     var locationManager = CLLocationManager()
     var locations = [Location]()
@@ -55,15 +54,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.requestLocation()
         }
         
+        // Update users location
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
+        // Loads data into the table view
         loadSnapshot()
     }
     
+    // Index through each in the location list to make it visible in spotlight search
     func index(item: Int) {
         let location = locations[item]
 
+        // Set attributes for spotlight search
         let attributeSet = CSSearchableItemAttributeSet(contentType: .text)
         attributeSet.title = location.locationName
         attributeSet.contentDescription = location.description
@@ -73,6 +76,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
         let item = CSSearchableItem(uniqueIdentifier: "\(item)", domainIdentifier: "dev.nathanschroeder", attributeSet: attributeSet)
         
+        // Make sure the item doesnt expire after the default amount
         item.expirationDate = Date.distantFuture
         
         CSSearchableIndex.default().indexSearchableItems([item]) { error in
@@ -85,11 +89,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    // Re-populates the locations array and table when the view appears
     override func viewWillAppear(_ animated: Bool) {
         locations = locationStore.allLocations
         loadSnapshot()
     }
     
+    // Loads all location data required for the tableview
     func loadSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Location>()
         snapshot.appendSections([.main])
@@ -97,6 +103,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         tableDataSource.applySnapshotUsingReloadData(snapshot)
     }
     
+    // Alert for when user taps on an item in the spotlight search
     func showAlert(_ which: Int) {
         let alert = UIAlertController(title: "Do you remember?", message: "\(locations[which].locationName ?? "Title") \n \(locations[which].description ?? "Description")", preferredStyle: .alert)
         
@@ -106,9 +113,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
+    // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? MapDetailsViewController else { return }
 
+        // Send properties to the MapDetailsViewController
         destination.locationStore = locationStore
         destination.savedLocations = locations
         destination.locationManager = locationManager

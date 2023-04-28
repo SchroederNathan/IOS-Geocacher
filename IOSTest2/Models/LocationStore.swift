@@ -9,12 +9,15 @@ import Foundation
 
 class LocationStore {
     
+    // MARK: - properties
     private var locationList = [Location]()
     
+    // Returns array of all locations
     var allLocations: [Location] {
         return locationList
     }
         
+    // Takes in a location object and adds it to the array
     func addLocation(_ location: Location) {
         locationList.append(location)
         saveLocations()
@@ -29,6 +32,7 @@ class LocationStore {
         return paths[0]
     }
     
+    // Saves locations to the document directory
     func saveLocations(){
         if let fileLocation = documentLibrary?.appendingPathComponent("locations.json"){
             do {
@@ -37,6 +41,7 @@ class LocationStore {
                 
                 let jsonData = try encoder.encode(locationList)
                 
+                // Write data to document directory
                 try jsonData.write(to: fileLocation)
             } catch {
                 print("Error - could not save: \(error.localizedDescription)")
@@ -44,12 +49,16 @@ class LocationStore {
         }
     }
     
+    // Loads locations from the document directory
     func loadLocations(){
+        // Get file path
         if let fileLocation = documentLibrary?.appendingPathComponent("locations.json"){
             do{
                 let jsonData = try Data(contentsOf: fileLocation)
                 
                 let decoder = JSONDecoder()
+                
+                // Save data to location array
                 locationList = try decoder.decode([Location].self, from: jsonData)
             }catch {
                 print("Unable to load the JSON - \(error.localizedDescription)")
