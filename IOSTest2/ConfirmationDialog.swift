@@ -38,7 +38,7 @@ class ConfirmationDialog: UIView {
     func showDialog(){
         alpha = 0
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, animations: {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, animations: {
             self.alpha = 1
             self.transform = CGAffineTransform(scaleX: 2, y: 2)
         })

@@ -17,15 +17,6 @@ class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - Actions
     @IBAction func addLocation(_ sender: Any) {
-        let confirmationView = ConfirmationDialog()
-        confirmationView.frame = view.bounds
-        confirmationView.isOpaque = false
-        
-        view.addSubview(confirmationView)
-        view.isUserInteractionEnabled = false
-        
-        confirmationView.showDialog()
-        
         // Format date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YY/MM/dd"
@@ -34,11 +25,26 @@ class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
 
         let location = Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: date)
         
-        locationStore.addLocation(location)
+        // Make sure it is not already in the list
+        if !locationStore.alreadyInList(location: location) {
+            locationStore.addLocation(location)
+            
+            let confirmationView = ConfirmationDialog()
+            confirmationView.frame = view.bounds
+            confirmationView.isOpaque = false
+            
+            view.addSubview(confirmationView)
+            view.isUserInteractionEnabled = false
+            
+            confirmationView.showDialog()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                self.navigationController?.popViewController(animated: true)
+            })
+        } else {
+            showAlert(withTitle: "Name taken", withMessage: "Please use a new location name")
+        }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            self.navigationController?.popViewController(animated: true)
-        })
     }
 
     
@@ -65,6 +71,18 @@ class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
+    }
+    
+    // Alert for if the user uses a pre existing name
+    func showAlert(withTitle title: String, withMessage message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default){
+            [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(okAction)
+        
+        present(alert,animated: true)
     }
     
     // MARK: - Keyboard

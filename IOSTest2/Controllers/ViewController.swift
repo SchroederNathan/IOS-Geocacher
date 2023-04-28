@@ -72,7 +72,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         attributeSet.contentDescription = location.description
         attributeSet.thumbnailData = UIImage(systemName: "backpack.fill")?.withTintColor(.white).pngData()
         
-        print("\(location.locationName ?? "none")")
+        print(location.locationName)
 
         let item = CSSearchableItem(uniqueIdentifier: "\(item)", domainIdentifier: "dev.nathanschroeder", attributeSet: attributeSet)
         
@@ -105,7 +105,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // Alert for when user taps on an item in the spotlight search
     func showAlert(_ which: Int) {
-        let alert = UIAlertController(title: "Do you remember?", message: "\(locations[which].locationName ?? "Title") \n \(locations[which].description ?? "Description")", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Do you remember?", message: "\(locations[which].locationName) \n \(locations[which].description ?? "Description")", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
         

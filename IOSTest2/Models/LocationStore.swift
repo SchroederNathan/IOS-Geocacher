@@ -32,6 +32,15 @@ class LocationStore {
         return paths[0]
     }
     
+    // Check if the movie is already in the list
+    func alreadyInList(location: Location) -> Bool {
+        if locationList.contains(location) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     // Saves locations to the document directory
     func saveLocations(){
         if let fileLocation = documentLibrary?.appendingPathComponent("locations.json"){

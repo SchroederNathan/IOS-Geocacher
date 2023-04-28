@@ -13,9 +13,9 @@ enum Section {
 }
 
 struct Location: Codable, Hashable {
-    var locationName: String?
+    var locationName: String
     var description: String?
-    var date: String?
+    var date: String
     
     enum CodingKeys: String, CodingKey {
         case locationName
