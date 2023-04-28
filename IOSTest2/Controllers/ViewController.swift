@@ -41,10 +41,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager = CLLocationManager()
     var locations = [Location]()
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         locationManager.delegate = self
         
@@ -57,6 +57,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         // Update users location
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
         
         // Loads data into the table view
         loadSnapshot()
@@ -122,12 +123,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         destination.locationStore = locationStore
         destination.savedLocations = locations
         destination.locationManager = locationManager
+        
     }
-    
-    
-    
-    
-    
     
 }
 
