@@ -14,11 +14,11 @@
             <objects>
                 <viewController storyboardIdentifier="LocationsVC" id="hMU-pg-jro" customClass="ViewController" customModule="IOSTest2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="saU-KS-CrJ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hfu-kV-4wh">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationCell" textLabel="U7U-Cx-7bo" detailTextLabel="mKP-uo-Lyy" style="IBUITableViewCellStyleSubtitle" id="TSc-Re-CNu">
@@ -77,18 +77,18 @@
             <objects>
                 <viewController id="QNG-D7-AxL" customClass="MapDetailsViewController" customModule="IOSTest2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tg4-gg-xNH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rO3-YJ-e6f">
-                                <rect key="frame" x="16" y="10" width="361" height="200"/>
+                                <rect key="frame" x="16" y="113" width="361" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="q6q-oq-O9k"/>
                                 </constraints>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="09u-PE-8oM">
-                                <rect key="frame" x="16" y="223" width="361" height="619"/>
+                                <rect key="frame" x="16" y="326" width="361" height="492"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ye-8T-iH1">
                                         <rect key="frame" x="0.0" y="0.0" width="361" height="34"/>
@@ -123,12 +123,11 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6O-h5-nL8">
-                                        <rect key="frame" x="0.0" y="232.33333333333329" width="361" height="386.66666666666674"/>
+                                        <rect key="frame" x="0.0" y="232.3333333333334" width="361" height="259.66666666666674"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Save Location Details"/>
                                         <connections>
                                             <action selector="addLocation:" destination="QNG-D7-AxL" eventType="touchUpInside" id="xWZ-hC-GFH"/>
-                                            <segue destination="hMU-pg-jro" kind="show" identifier="geoLocation" id="8fq-GH-dKr"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -176,9 +175,6 @@
             <point key="canvasLocation" x="1848.0916030534349" y="-89.436619718309871"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="8fq-GH-dKr"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="globe.americas" catalog="system" width="128" height="123"/>
         <systemColor name="labelColor">

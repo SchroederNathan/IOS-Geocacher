@@ -11,23 +11,21 @@ class ConfirmationDialog: UIView {
 
     override func draw(_ rect: CGRect) {
         // Drawing code
-        //let width: CGFloat = 100
-        //let height: CGFloat = 100
+        let circle = UIBezierPath(arcCenter: CGPoint(x: center.x, y: center.y - 15), radius: 50, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
         
-        //let viewRect = CGRect(x: round(bounds.size.width - width) / 3, y: round(bounds.size.height - height) / 3, width: width, height: height)
-        
-        let circle = UIBezierPath(arcCenter: CGPoint(x: 100, y: 100), radius: 200, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-        
-        UIColor(red: 43, green: 101, blue: 236, alpha: 1).setFill()
-        UIColor(red: 0, green: 0, blue: 0, alpha: 0).setStroke()
+        UIColor(red: 43/255, green: 101/255, blue: 236/255, alpha: 1).setFill()
+        UIColor(red: 0, green: 0/255, blue: 0, alpha: 1).setStroke()
 
         circle.fill()
+        
+        circle.lineWidth = 3
         circle.stroke()
+        
         
         guard let image = UIImage(systemName: "backpack.fill")?.withTintColor(.white) else { return }
         
-        image.draw(in: CGRect(x: center.x - 15, y: center.y - 30, width: 30, height: 30))
-        
+        image.draw(in: CGRect(x: center.x - 37, y: center.y - 55, width: 75, height: 75))
+
         
     }
     

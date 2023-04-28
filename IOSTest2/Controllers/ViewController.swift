@@ -20,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: - Diffable Data Source
     private lazy var tableDataSource = UITableViewDiffableDataSource<Section, Location>(tableView: tableView){
         tableView, IndexPath, location in
+        
         // Create cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: IndexPath)
         
@@ -27,38 +28,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         cell.textLabel?.text = location.locationName
         cell.detailTextLabel?.text = location.date
         
+        print(IndexPath.row)
+        
+        
         self.index(item: IndexPath.row)
         
         return cell
     }
     
-    
-    
-    
     // MARK: - Properties
     
+    var locationStore: LocationStore!
     var locationManager = CLLocationManager()
     var locations = [Location]()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.delegate = self
         
-
+        
+        locationManager.delegate = self
         
         // Request location
         if locationManager.authorizationStatus == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
         }
         
-//        let defaults = UserDefaults.standard
-//        if let savedLocations = defaults.object(forKey: "locations") as? [Location] {
-//            locations = savedLocations
-//        }
-        
-        
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         loadSnapshot()
     }
@@ -87,21 +85,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
-    func deindex(item: Int) {
-        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(item)"]) { error in
-            if let error = error {
-                print("Deindexing error: \(error.localizedDescription)")
-            } else {
-                print("Search item successfully removed!")
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        locations = locationStore.allLocations
+        loadSnapshot()
     }
     
     func loadSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Location>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(locations, toSection: .main)
-        tableDataSource.apply(snapshot)
+        snapshot.appendItems(locationStore.allLocations, toSection: .main)
+        tableDataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     func showAlert(_ which: Int) {
@@ -112,9 +105,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         present(alert, animated: true)
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? MapDetailsViewController else { return }
-        
+
+        destination.locationStore = locationStore
         destination.savedLocations = locations
         destination.locationManager = locationManager
     }

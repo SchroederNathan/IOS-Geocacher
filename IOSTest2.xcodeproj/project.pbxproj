@@ -16,6 +16,7 @@
 		4332D7AB29F0653E0053B5C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4332D7A929F0653E0053B5C9 /* LaunchScreen.storyboard */; };
 		4348919E29F90E9300DA86F5 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348919D29F90E9300DA86F5 /* Location.swift */; };
 		434891A029F9DD7200DA86F5 /* ConfirmationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348919F29F9DD7200DA86F5 /* ConfirmationDialog.swift */; };
+		434891A229FA24AD00DA86F5 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434891A129FA24AD00DA86F5 /* LocationStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4332D7AC29F0653E0053B5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4348919D29F90E9300DA86F5 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		4348919F29F9DD7200DA86F5 /* ConfirmationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationDialog.swift; sourceTree = "<group>"; };
+		434891A129FA24AD00DA86F5 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,17 +65,42 @@
 			isa = PBXGroup;
 			children = (
 				4348919F29F9DD7200DA86F5 /* ConfirmationDialog.swift */,
-				4332D79E29F0653D0053B5C9 /* AppDelegate.swift */,
-				4332D7A029F0653D0053B5C9 /* SceneDelegate.swift */,
-				4332D7A229F0653D0053B5C9 /* ViewController.swift */,
-				430ACEDA29F7662C0034963F /* MapDetailsViewController.swift */,
+				434891A529FA24E200DA86F5 /* Delegates */,
+				434891A429FA24D900DA86F5 /* Controllers */,
+				434891A329FA24CB00DA86F5 /* Models */,
 				4332D7A429F0653D0053B5C9 /* Main.storyboard */,
-				4348919D29F90E9300DA86F5 /* Location.swift */,
 				4332D7A729F0653E0053B5C9 /* Assets.xcassets */,
 				4332D7A929F0653E0053B5C9 /* LaunchScreen.storyboard */,
 				4332D7AC29F0653E0053B5C9 /* Info.plist */,
 			);
 			path = IOSTest2;
+			sourceTree = "<group>";
+		};
+		434891A329FA24CB00DA86F5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4348919D29F90E9300DA86F5 /* Location.swift */,
+				434891A129FA24AD00DA86F5 /* LocationStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		434891A429FA24D900DA86F5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4332D7A229F0653D0053B5C9 /* ViewController.swift */,
+				430ACEDA29F7662C0034963F /* MapDetailsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		434891A529FA24E200DA86F5 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				4332D79E29F0653D0053B5C9 /* AppDelegate.swift */,
+				4332D7A029F0653D0053B5C9 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +177,7 @@
 				430ACEDB29F7662C0034963F /* MapDetailsViewController.swift in Sources */,
 				4332D7A329F0653D0053B5C9 /* ViewController.swift in Sources */,
 				434891A029F9DD7200DA86F5 /* ConfirmationDialog.swift in Sources */,
+				434891A229FA24AD00DA86F5 /* LocationStore.swift in Sources */,
 				4348919E29F90E9300DA86F5 /* Location.swift in Sources */,
 				4332D79F29F0653D0053B5C9 /* AppDelegate.swift in Sources */,
 				4332D7A129F0653D0053B5C9 /* SceneDelegate.swift in Sources */,

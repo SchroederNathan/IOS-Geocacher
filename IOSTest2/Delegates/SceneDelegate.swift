@@ -11,6 +11,7 @@ import CoreSpotlight
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var locationStore = LocationStore()
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         if userActivity.activityType == CSSearchableItemActionType {
@@ -30,6 +31,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        locationStore.loadLocations()
+        
+        if let rootvc = window?.rootViewController as? UINavigationController {
+            if let mainVC = rootvc.viewControllers.first as? ViewController {
+                mainVC.locationStore = locationStore
+            }
+        }
+        
+        if let rootMapVC = window?.rootViewController as? MapDetailsViewController {
+            rootMapVC.locationStore = locationStore
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

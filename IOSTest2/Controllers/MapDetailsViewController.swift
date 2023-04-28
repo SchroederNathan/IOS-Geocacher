@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapDetailsViewController: UIViewController {
+class MapDetailsViewController: UIViewController, CLLocationManagerDelegate {
     
     //MARK: - Outlets
     @IBOutlet var mapView: MKMapView!
@@ -21,6 +21,8 @@ class MapDetailsViewController: UIViewController {
     //MARK: - Properties
     var locationManager: CLLocationManager!
     var savedLocations = [Location]()
+    var locationStore: LocationStore!
+    //var currentLocation:
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +30,19 @@ class MapDetailsViewController: UIViewController {
         mapView.isScrollEnabled = false
         mapView.showsUserLocation = true
         
+        locationManager.delegate = self
+        
+        
+        
+        
+        
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
     }
+    
+
         
     @objc func dismissKeyboard() {
         view.endEditing(true)
@@ -40,24 +51,47 @@ class MapDetailsViewController: UIViewController {
 
     
     @IBAction func addLocation(_ sender: Any) {
-        //let date = Date()
-    }
-    
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? ViewController else { return }
+        let confirmationView = ConfirmationDialog()
+        confirmationView.frame = view.bounds
+        confirmationView.isOpaque = false
+        
+        view.addSubview(confirmationView)
+        view.isUserInteractionEnabled = false
+        
+        confirmationView.showDialog()
         
         // Format date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YY/MM/dd"
-        
+
         let date = dateFormatter.string(from: Date())
-        
+
         let location = Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: date)
         
-        destination.locations.append(location)
+        locationStore.addLocation(location)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+            self.navigationController?.popViewController(animated: true)
+        })
     }
+    
+    
+    
+    // MARK: - Navigation
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let destination = segue.destination as? ViewController else { return }
+//
+//        // Format date
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "YY/MM/dd"
+//
+//        let date = dateFormatter.string(from: Date())
+//
+//        let location = Location(locationName: locationNameTextField.text ?? "Title", description: locationDescriptionTextView.text, date: date)
+//
+//        destination.locations.append(location)
+//    }
 }
 
 extension MapDetailsViewController: UITextViewDelegate{
